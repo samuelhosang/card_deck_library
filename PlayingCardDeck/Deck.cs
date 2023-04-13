@@ -44,6 +44,23 @@ public class Deck
         return dealt;
     }
 
+    public List<List<Card>> DealToPlayers(int numberOfPlayers, int numberOfCards)
+    {
+        List<List<Card>> playerCards = new(numberOfPlayers);
+
+        for (int i = 0; i < numberOfCards; i++)
+        {
+            for (int j = 0; j < numberOfPlayers; j++)
+            {
+                if (i == 0) playerCards.Add(new List<Card>(numberOfCards));
+
+                playerCards[j].Add(DealOneCard());
+            }
+        }
+
+        return playerCards;
+    }
+
     public void Populate()
     {
         _cards.Clear();
