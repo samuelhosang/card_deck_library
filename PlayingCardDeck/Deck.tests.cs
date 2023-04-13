@@ -65,5 +65,27 @@ public class DeckTests
         Console.WriteLine("Error Rate: " + errorRate);
         Assert.IsTrue(errorRate < 3, "more than 5% of the deck was similar");
     }
-        
+
+    [TestMethod]
+    [DataRow(4, 5)]
+    [DataRow(3, 7)]
+    public void DeckShouldDealCardsRoundRobinAndEvenlyToPlayers(int players, int cards)
+    {
+        deck.Shuffle();
+        List<Card> copy = new(deck.Cards);
+
+        List<List<Card>> dealtToPlayers = deck.DealToPlayers(players, cards);
+        Assert.AreEqual(52 - players * cards, deck.Cards.Count);
+
+        for (int i = 0; i < cards; i++)
+        {
+            for (int j = 0; j < players; j++)
+            {
+                Card lhs = copy[players * i + j];
+                Card rhs = dealtToPlayers[j][i];
+                
+                Assert.AreEqual(lhs.ToString(), rhs.ToString());
+            }
+        }
+    }
 }
